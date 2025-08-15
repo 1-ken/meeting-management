@@ -6,6 +6,7 @@ import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import SchemaSetup from './components/Setup/SchemaSetup';
 import DashboardRouter from './components/Dashboard/DashboardRouter';
+import LandingPage from './components/Landing/LandingPage';
 
 // Component to handle authenticated routes
 function AuthenticatedApp() {
@@ -13,6 +14,7 @@ function AuthenticatedApp() {
   
   return (
     <Routes>
+      <Route path="/" element={!currentUser ? <LandingPage /> : <Navigate to="/dashboard" />} />
       <Route path="/login" element={!currentUser ? <Login /> : <Navigate to="/dashboard" />} />
       <Route path="/signup" element={!currentUser ? <Signup /> : <Navigate to="/dashboard" />} />
       <Route path="/setup" element={<SchemaSetup />} />
@@ -24,8 +26,7 @@ function AuthenticatedApp() {
           </ProtectedRoute>
         } 
       />
-      <Route path="/" element={<Navigate to={currentUser ? "/dashboard" : "/login"} />} />
-      <Route path="*" element={<Navigate to={currentUser ? "/dashboard" : "/login"} />} />
+      <Route path="*" element={<Navigate to={currentUser ? "/dashboard" : "/"} />} />
     </Routes>
   );
 }
